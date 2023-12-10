@@ -35,13 +35,27 @@ module.exports = {
                 return res.status(400).json({ "state": false, "error": "Uno o más productos no existen." });
             }
 
-            const data = await sale.save();
+            // Calcular el totalAmount
+            const totalAmount = req.body.products.reduce((total, product) => {
+                const productDetails = existingProducts.find(p => p._id.toString() === product.product);
+                return total + productDetails.price * product.quantity;
+            }, 0);
 
-            return res.status(200).json({ "state": true, "data": data })
+            // Asignar el totalAmount calculado a la venta
+            sale.totalAmount = totalAmount;
+
+     
+            const savedSale = await sale.save();
+
+            
+            const populatedSale = await Sale.findById(savedSale._id).populate('products.product');
+
+            return res.status(200).json({ "state": true, "data": populatedSale });
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error })
+            return res.status(500).json({ "state": false, "error": error });
         }
     },
+
 
     updateSale: async (req, res) => {
         const { id } = req.params;
