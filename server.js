@@ -1,5 +1,5 @@
 const express = require('express')
-
+const cors = require('cors');
 const app = express()
 
 //connect-DB
@@ -10,6 +10,7 @@ app.set('PORT',process.env.PORT || 3000 )
 
 //middlewares
 app.use(express.json())
+app.use(cors());
 
 app.use("/products", require('./routers/products'))
 app.use("/sales", require('./routers/sales'))
