@@ -2,15 +2,23 @@ const Sale = require('../models/model-sales');
 const Product = require('../models/model-products');
 
 module.exports = {
+
     findAllSales: async (req, res) => {
         try {
             const data = await Sale.find({})
-
-            return res.status(200).json({ "state": true, "data": data })
+                .populate({
+                    path: 'products.product',
+                    populate: {
+                        path: 'category',
+                    },
+                });
+    
+            return res.status(200).json({ "state": true, "data": data });
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error })
+            return res.status(500).json({ "state": false, "error": error });
         }
     },
+    
 
     findSaleById: async (req, res) => {
         const { id } = req.params;
@@ -25,37 +33,43 @@ module.exports = {
 
     saveSale: async (req, res) => {
         const sale = new Sale(req.body);
-
+    
         try {
-            // Verificar si los productos existen antes de guardar la venta
-            const productIds = req.body.products.map(product => product.product);
-            const existingProducts = await Product.find({ _id: { $in: productIds } });
-
-            if (existingProducts.length !== productIds.length) {
-                return res.status(400).json({ "state": false, "error": "Uno o más productos no existen." });
+            // Verificar si los productos existen antes de guardar la venta y comprobar el stock
+            const productQuantities = req.body.products;
+            let totalAmount = 0;
+            for (const product of productQuantities) {
+                const existingProduct = await Product.findById(product.product);
+                if (!existingProduct || existingProduct.stock < product.quantity) {
+                    return res.status(400).json({ "state": false, "error": "Producto no encontrado o cantidad insuficiente en stock." });
+                }
+    
+                // Disminuir la cantidad en stock
+                existingProduct.stock -= product.quantity;
+                await existingProduct.save();
+    
+                // Calcular el monto total considerando el precio y cantidad del producto
+                totalAmount += existingProduct.price * product.quantity;
             }
-
-            // Calcular el totalAmount
-            const totalAmount = req.body.products.reduce((total, product) => {
-                const productDetails = existingProducts.find(p => p._id.toString() === product.product);
-                return total + productDetails.price * product.quantity;
-            }, 0);
-
+    
             // Asignar el totalAmount calculado a la venta
             sale.totalAmount = totalAmount;
-
-     
+    
             const savedSale = await sale.save();
-
-            
-            const populatedSale = await Sale.findById(savedSale._id).populate('products.product');
-
+    
+            // Obtener la venta con detalles de productos y categorías
+            const populatedSale = await Sale.findById(savedSale._id).populate({
+                path: 'products.product',
+                populate: {
+                    path: 'category',
+                },
+            });
+    
             return res.status(200).json({ "state": true, "data": populatedSale });
         } catch (error) {
             return res.status(500).json({ "state": false, "error": error });
         }
-    },
-
+    },        
 
     updateSale: async (req, res) => {
         const { id } = req.params;
