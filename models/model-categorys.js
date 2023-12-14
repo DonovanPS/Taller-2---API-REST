@@ -9,7 +9,7 @@ const categorySchema = new Schema({
     unique: true,
   },
   description: String,
-  // Otros campos relevantes para la categoría
+  
 });
 
 module.exports = mongoose.model('Category', categorySchema);

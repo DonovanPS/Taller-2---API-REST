@@ -8,7 +8,7 @@ module.exports = {
     
             return res.status(200).json({ "state": true, "data": data });
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error });
+            return res.status(500).json({ "state": false, "error": error, "message": error.message });
         }
     },
 
@@ -19,7 +19,7 @@ module.exports = {
 
             return res.status(200).json({ "state": true, "data": data })
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error })
+            return res.status(500).json({ "state": false, "error": error, "message": error.message })
         }
     },
 
@@ -27,12 +27,12 @@ module.exports = {
         const product = new Product(req.body);
     
         try {
-            const data = await product.save();
-            await data.populate('category').execPopulate();
+            const savedProduct = await product.save();
+            const data = await Product.findOne({ _id: savedProduct._id }).populate('category').exec();
     
-            return res.status(200).json({ "state": true, "data": data });
+            return res.status(200).json({ "state": true, "data": data, "message": `Producto guardado: ${data.name}` });
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error });
+            return res.status(500).json({ "state": false, "error": error, "message": error.message });
         }
     },
 
@@ -42,10 +42,9 @@ module.exports = {
 
         try {
             const updatedProduct = await Product.findByIdAndUpdate(id, updates, { new: true });
-            
-            return res.status(200).json({ "state": true, "data": updatedProduct });
+            return res.status(200).json({ "state": true, "data": updatedProduct, message: `Producto actualizado: ${updatedProduct.name}` });
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error });
+            return res.status(500).json({ "state": false, "error": error, "message": error.message });
         }
     }
 };

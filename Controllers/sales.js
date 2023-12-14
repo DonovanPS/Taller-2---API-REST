@@ -15,7 +15,7 @@ module.exports = {
     
             return res.status(200).json({ "state": true, "data": data });
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error });
+            return res.status(500).json({ "state": false, "error": error, "message": error.message });
         }
     },
     
@@ -27,7 +27,7 @@ module.exports = {
 
             return res.status(200).json({ "state": true, "data": data })
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error })
+            return res.status(500).json({ "state": false, "error": error, "message": error.message })
         }
     },
 
@@ -37,6 +37,8 @@ module.exports = {
         try {
             // Verificar si los productos existen antes de guardar la venta y comprobar el stock
             const productQuantities = req.body.products;
+
+
             let totalAmount = 0;
             for (const product of productQuantities) {
                 const existingProduct = await Product.findById(product.product);
@@ -65,22 +67,22 @@ module.exports = {
                 },
             });
     
-            return res.status(200).json({ "state": true, "data": populatedSale });
+            return res.status(200).json({ "state": true, "data": populatedSale, "message": `Venta guardada: ${populatedSale._id}` });
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error });
+            return res.status(500).json({ "state": false, "error": error, "message": error.message });
         }
     },        
 
-    updateSale: async (req, res) => {
+  /*  updateSale: async (req, res) => {
         const { id } = req.params;
         const updates = req.body;
 
         try {
             const updatedSale = await Sale.findByIdAndUpdate(id, updates, { new: true });
             
-            return res.status(200).json({ "state": true, "data": updatedSale });
+            return res.status(200).json({ "state": true, "data": updatedSale, message: `Venta actualizada: ${updatedSale.name}` });
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error });
+            return res.status(500).json({ "state": false, "error": error, "message": error.message });
         }
-    }
+    }*/
 };

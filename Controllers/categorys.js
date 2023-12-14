@@ -7,7 +7,7 @@ module.exports = {
 
             return res.status(200).json({ "state": true, "data": data })
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error })
+            return res.status(500).json({ "state": false, "error": error, "message": error.message })
         }
     },
 
@@ -16,9 +16,9 @@ module.exports = {
         try {
             const data = await Category.findById(id);
 
-            return res.status(200).json({ "state": true, "data": data })
+            return res.status(200).json({ "state": true, "data": data})
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error })
+            return res.status(500).json({ "state": false, "error": error, "message": error.message })
         }
     },
 
@@ -28,9 +28,9 @@ module.exports = {
         try {
             const data = await category.save();
 
-            return res.status(200).json({ "state": true, "data": data })
+            return res.status(200).json({ "state": true, "data": data, message: `Categoria guardada: ${data.name}` })
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error })
+            return res.status(500).json({ "state": false, "error": error, "message": error.message })
         }
     },
 
@@ -41,9 +41,9 @@ module.exports = {
         try {
             const updatedCategory = await Category.findByIdAndUpdate(id, updates, { new: true });
             
-            return res.status(200).json({ "state": true, "data": updatedCategory });
+            return res.status(200).json({ "state": true, "data": updatedCategory, message: `Categoria actualizada: ${updatedCategory.name}` });
         } catch (error) {
-            return res.status(500).json({ "state": false, "error": error });
+            return res.status(500).json({ "state": false, "error": error, "message": error.message });
         }
     }
 };

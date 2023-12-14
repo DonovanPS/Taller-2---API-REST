@@ -7,6 +7,10 @@ const saleSchema = new Schema({
     type: Date,
     required: true,
   },
+  client: {
+    type: String,
+    required: true,
+  },
   products: [
     {
       product: {

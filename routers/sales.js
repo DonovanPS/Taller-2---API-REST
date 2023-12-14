@@ -9,6 +9,6 @@ const {
 saleRoutes.get("/", findAllSales);
 saleRoutes.get("/:id", findSaleById);
 saleRoutes.post("/", saveSale);
-saleRoutes.put("/:id", updateSale);
+//saleRoutes.put("/:id", updateSale);
 
 module.exports = saleRoutes;
