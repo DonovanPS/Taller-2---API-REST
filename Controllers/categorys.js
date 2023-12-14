@@ -34,6 +34,7 @@ module.exports = {
         }
     },
 
+    
     updateCategory: async (req, res) => {
         const { id } = req.params;
         const updates = req.body;
