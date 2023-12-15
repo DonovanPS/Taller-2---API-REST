@@ -27,7 +27,6 @@ const saleSchema = new Schema({
     type: Number,
     required: true,
   },
-  // Otros campos relevantes para la venta
 });
 
 module.exports = mongoose.model('Sale', saleSchema);

@@ -17,9 +17,9 @@ app.use(express.json())
 const options = {
     swaggerDefinition: {
         info: {
-            title: 'API de Ventas',
+            title: 'API Nala Beauty',
             version: '1.0.0',
-            description: 'API de Ventas',
+            description: 'API para control de invetario y ventas de Nala Beauty',
         }
     },
     apis: ['swagger.yaml']

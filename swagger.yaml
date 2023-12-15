@@ -1,250 +1,250 @@
 tags:
-- name: empleados
-  description: Endpoints de empleados
-- name: departamentos
-  description: Endpoints de departamentos
+  - name: Categorias
+    description: Endpoints de categorías
+  - name: Productos
+    description: Endpoints de productos
+  - name: Ventas
+    description: Endpoints de ventas
 paths:
-# [GET] empleados
-  /employees:
+  # Endpoints de categorías
+  /categories:
     get:
       tags:
-      - empleados
-      summary: Encontrar todos los Empleados
+        - Categorias
+      summary: Encontrar todas las Categorías
       responses:
         200:
           description: 'OK'
         500:
           description: 'Server Error'
 
-# [POST] empleados
-  /employees/{id}:
     post:
       tags:
-      - empleados
-      summary: Agregar nuevo Empleado a un Departamento
+        - Categorias
+      summary: Agregar nueva Categoría
       parameters:
-      - name: id
-        in: path
-        description: ID del departamento al que se agregará el empleado
-        required: true
-        type: string
-      - name: body
-        in: body
-        description: Información del empleado
-        required: true
-        schema:
-          $ref: '#/definitions/employees'
-      responses:
-        201:
-          description: 'Created'
-        400:
-          description: 'Bad Request'
-        409:
-          description: 'Conflict'
-        500:
-          description: 'Server Error'
-
-# [GET] empleados/id
-    get:
-      tags:
-      - empleados
-      summary: Buscar por el id del empleado
-      parameters:
-      - name: id
-        in: path
-        description: Id del empleado
-        required: true
+        - name: body
+          in: body
+          description: Información de la categoría
+          required: true
+          schema:
+            $ref: '#/definitions/categories'
       responses:
         200:
           description: 'OK'
-        409:
-          description: 'Conflict'
         500:
           description: 'Server Error'
 
-# [PUT] empleados/id
+  /categories/{id}:
+    get:
+      tags:
+        - Categorias
+      summary: Buscar por el id de la Categoría
+      parameters:
+        - name: id
+          in: path
+          description: Id de la Categoría
+          required: true
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+
     put:
       tags:
-      - empleados
-      summary: Actualizar el empleado por el id
+        - Categorias
+      summary: Actualizar la Categoría por el id
       parameters:
-      - name: id
-        in: path
-        description: Id del empleado
-        required: true
-      - name: body
-        in: body
-        description: Información del empleado
-        required: true
-        schema:
-          $ref: '#/definitions/employees'
+        - name: id
+          in: path
+          description: Id de la Categoría
+          required: true
+        - name: body
+          in: body
+          description: Información de la categoría
+          required: true
+          schema:
+            $ref: '#/definitions/categories'
       responses:
         200:
           description: 'OK'
-        400:
-          description: 'Bad Request'
-        409:
-          description: 'Conflict'
         500:
           description: 'Server Error'
 
-# [DELETE] empleados/id
-    delete:
-      tags:
-      - empleados
-      summary: Elimina el empleado por el id
-      parameters:
-      - name: id
-        in: path
-        description: Id del empleado
-        required: true
-      responses:
-        200:
-          description: 'OK'
-        409:
-          description: 'Conflict'
-        500:
-          description: 'Server Error'
-
-# [GET] departamentos
-  /departments:
+  # Endpoints de productos
+  /products:
     get:
       tags:
-      - departamentos
-      summary: Encontrar todos los departamentos
+        - Productos
+      summary: Encontrar todos los Productos
       responses:
         200:
           description: 'OK'
         500:
           description: 'Server Error'
 
-# [POST] departamentos
     post:
       tags:
-      - departamentos
-      summary: Agregar nuevo Departamento
+        - Productos
+      summary: Agregar nuevo Producto
       parameters:
-      - name: body
-        in: body
-        description: Información del departamento
-        required: true
-        schema:
-          $ref: '#/definitions/departments'
+        - name: body
+          in: body
+          description: Información del producto
+          required: true
+          schema:
+            $ref: '#/definitions/products'
       responses:
-        201:
-          description: 'Created'
-        400:
-          description: 'Bad Request'
-        409:
-          description: 'Conflict'
+        200:
+          description: 'OK'
         500:
           description: 'Server Error'
 
-# [GET] departamentos/id
-  /departments/{id}:
+  /products/{id}:
     get:
       tags:
-      - departamentos
-      summary: Buscar por el id del departamento
+        - Productos
+      summary: Buscar por el id del Producto
       parameters:
-      - name: id
-        in: path
-        description: Id del departamento
-        required: true
+        - name: id
+          in: path
+          description: Id del Producto
+          required: true
       responses:
         200:
           description: 'OK'
-        409:
-          description: 'Conflict'
         500:
           description: 'Server Error'
 
-# [PUT] departamentos/id
     put:
       tags:
-      - departamentos
-      summary: Actualizar el departamento por el id
+        - Productos
+      summary: Actualizar el Producto por el id
       parameters:
-      - name: id
-        in: path
-        description: Id del departamento
-        required: true
-      - name: body
-        in: body
-        description: Información del departamento
-        required: true
-        schema:
-          $ref: '#/definitions/departments'
+        - name: id
+          in: path
+          description: Id del Producto
+          required: true
+        - name: body
+          in: body
+          description: Información del Producto
+          required: true
+          schema:
+            $ref: '#/definitions/products'
       responses:
         200:
           description: 'OK'
-        400:
-          description: 'Bad Request'
-        409:
-          description: 'Conflict'
         500:
           description: 'Server Error'
 
-# [DELETE] departamentos/id
-    delete:
+  # Endpoints de ventas
+  /sales:
+    get:
       tags:
-      - departamentos
-      summary: Elimina el departamento por el id
-      parameters:
-      - name: id
-        in: path
-        description: Id del departamento
-        required: true
+        - Ventas
+      summary: Obtener todas las ventas
       responses:
         200:
           description: 'OK'
-        409:
-          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+    post:
+      tags:
+        - Ventas
+      summary: Agregar nueva venta
+      parameters:
+        - name: body
+          in: body
+          description: Información de la venta
+          required: true
+          schema:
+            $ref: '#/definitions/sales'
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+
+  /sales/{id}:
+    get:
+      tags:
+        - Ventas
+      summary: Buscar venta por ID
+      parameters:
+        - name: id
+          in: path
+          description: ID de la venta
+          required: true
+      responses:
+        200:
+          description: 'OK'
         500:
           description: 'Server Error'
 
 # definitions
 definitions:
-  employees:
+  categories:
     type: object
     required:
-        - name
-        - lastName
-        - role
+      - name
     properties:
       name:
         type: string
-        description: nombre del empleado
-        default: John
-      lastName:
-        type: string
-        description: apellido del empleado
-        default: Doe
-      role:
-        type: string
-        description: rol del empleado
-        default: Count
-  departments:
-    type: object
-    required:
-        - department_name
-        - description
-        - employees
-    properties:
-      department_name:
-        type: string
-        description: nombre del departamento
-        default: Pruebas
+        description: Nombre de la categoría
       description:
         type: string
-        description: descripción del departamento
-        default: Donde se hacen las pruebas
-      employees:
+        description: Descripción de la categoría
+
+  products:
+    type: object
+    required:
+      - name
+      - price
+      - stock
+      - category
+    properties:
+      name:
+        type: string
+        description: Nombre del producto
+      description:
+        type: string
+        description: Descripción del producto
+      price:
+        type: number
+        description: Precio del producto
+      stock:
+        type: number
+        description: Stock disponible
+      category:
+        type: string
+        description: Categoría del producto (id de la categoria)
+
+  sales:
+    type: object
+    required:
+      - date
+      - client
+      - products
+      - totalAmount
+    properties:
+      date:
+        type: string
+        format: date
+        description: Fecha de la venta
+      client:
+        type: string
+        description: Cliente asociado a la venta
+      products:
         type: array
-        description: Lista de empleados en el departamento
+        description: Productos vendidos con cantidades
         items:
-          $ref: '#/definitions/employees'
-        default: []
-schemes:
- - https
- - http
+          type: object
+          properties:
+            product:
+              type: string
+              description: ID del producto vendido
+            quantity:
+              type: number
+              description: Cantidad vendida
