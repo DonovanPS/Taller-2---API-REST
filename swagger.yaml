@@ -72,7 +72,24 @@ paths:
         500:
           description: 'Server Error'
 
-  # Endpoints de productos
+    delete:
+      tags:
+        - Categorias
+      summary: Eliminar la Categoría por el id
+      parameters:
+        - name: id
+          in: path
+          description: Id de la Categoría
+          required: true
+      responses:
+        200:
+          description: 'OK'
+        404:
+          description: 'Categoria no encontrada'
+        500:
+          description: 'Server Error'
+
+   # Endpoints de productos
   /products:
     get:
       tags:
@@ -135,6 +152,23 @@ paths:
       responses:
         200:
           description: 'OK'
+        500:
+          description: 'Server Error'
+
+    delete:
+      tags:
+        - Productos
+      summary: Eliminar el Producto por el id
+      parameters:
+        - name: id
+          in: path
+          description: Id del Producto
+          required: true
+      responses:
+        200:
+          description: 'OK'
+        404:
+          description: 'Producto no encontrado'
         500:
           description: 'Server Error'
 

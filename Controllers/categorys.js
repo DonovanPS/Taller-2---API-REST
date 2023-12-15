@@ -46,5 +46,18 @@ module.exports = {
         } catch (error) {
             return res.status(500).json({ "state": false, "error": error, "message": error.message });
         }
+    }, 
+    
+    deleteCategory: async (req, res) => {
+        const { id } = req.params;
+        try {
+            const deletedCategory = await Category.findByIdAndDelete(id);
+            if (!deletedCategory) {
+                return res.status(404).json({ "state": false, "message": "Categoria no encontrada" });
+            }
+            return res.status(200).json({ "state": true, "message": `Categoria eliminada: ${deletedCategory.name}` });
+        } catch (error) {
+            return res.status(500).json({ "state": false, "error": error, "message": error.message });
+        }
     }
 };

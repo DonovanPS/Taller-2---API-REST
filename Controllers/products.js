@@ -46,5 +46,18 @@ module.exports = {
         } catch (error) {
             return res.status(500).json({ "state": false, "error": error, "message": error.message });
         }
+    }, 
+
+    deleteProduct: async (req, res) => {
+        const { id } = req.params;
+        try {
+            const deletedProduct = await Product.findByIdAndDelete(id);
+            if (!deletedProduct) {
+                return res.status(404).json({ "state": false, "message": "Producto no encontrado" });
+            }
+            return res.status(200).json({ "state": true, "message": `Producto eliminado: ${deletedProduct.name}` });
+        } catch (error) {
+            return res.status(500).json({ "state": false, "error": error, "message": error.message });
+        }
     }
 };
