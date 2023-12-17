@@ -102,7 +102,7 @@ module.exports = {
             const productCountMap = new Map();
             data.forEach(sale => {
                 sale.products.forEach(productSold => {
-                    const productName = productSold.product.name;
+                    const productName = productSold.product ? productSold.product.name : 'Producto no disponible';
 
                     // Incrementar la cantidad vendida del producto en el mapa
                     if (productCountMap.has(productName)) {
