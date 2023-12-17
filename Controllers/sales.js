@@ -85,4 +85,40 @@ module.exports = {
             return res.status(500).json({ "state": false, "error": error, "message": error.message });
         }
     }*/
+
+    findSalesByDate: async (req, res) => {
+        const { date } = req.params;
+
+        try {
+            const startDate = new Date(date);
+            const endDate = new Date(date);
+            endDate.setDate(endDate.getDate() + 1); // Incrementa la fecha en un día para obtener ventas hasta el final del día
+
+            const data = await Sale.find({
+                date: { $gte: startDate, $lt: endDate }
+            }).populate('products.product');
+
+            // Crear un objeto para almacenar la cantidad de cada producto vendido
+            const productCountMap = new Map();
+            data.forEach(sale => {
+                sale.products.forEach(productSold => {
+                    const productName = productSold.product.name;
+
+                    // Incrementar la cantidad vendida del producto en el mapa
+                    if (productCountMap.has(productName)) {
+                        productCountMap.set(productName, productCountMap.get(productName) + productSold.quantity);
+                    } else {
+                        productCountMap.set(productName, productSold.quantity);
+                    }
+                });
+            });
+
+            // Convertir el mapa a un arreglo de objetos con el nombre del producto y la cantidad vendida
+            const result = Array.from(productCountMap, ([productName, quantity]) => ({ productName, quantity }));
+
+            return res.status(200).json({ "state": true, "data": result });
+        } catch (error) {
+            return res.status(500).json({ "state": false, "error": error, "message": error.message });
+        }
+    }
 };
