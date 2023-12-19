@@ -80,8 +80,8 @@ module.exports = {
     
             // Devuelve el resultado
             return res.status(200).json({
-                state: updatedProduct.state,
-                message: `Estado del producto actualizado: ${updatedProduct.name}`,
+                state: true,
+                message: `Estado del producto: ${updatedProduct.name} actualizado`,
             });
         } catch (error) {
             // Manejo de errores

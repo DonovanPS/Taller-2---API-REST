@@ -43,7 +43,7 @@ module.exports = {
             for (const product of productQuantities) {
                 const existingProduct = await Product.findById(product.product);
                 if (!existingProduct || existingProduct.stock < product.quantity) {
-                    return res.status(400).json({ "state": false, "error": "Producto no encontrado o cantidad insuficiente en stock." });
+                    return res.status(400).json({ "state": false, "message": "Cantidad insuficiente en stock." });
                 }
 
                 // Disminuir la cantidad en stock
