@@ -20,7 +20,14 @@ const productSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Category',
   },
-
+  state: {
+    type: Boolean,
+    default: true,
+  },
+  image:{
+    type: String,
+    required: true,
+  }
 });
 
 module.exports = mongoose.model('Product', productSchema);

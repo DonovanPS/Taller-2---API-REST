@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 
 //conexión remota (MongoDB Atlas)
-const URI = "mongodb+srv://donovanpicon:mDFJXHRusLQrsc7l@uptc.mp8jwu6.mongodb.net/TallerIIApi?retryWrites=true&w=majority"
+const URI = "mongodb+srv://donovanpicon:mDFJXHRusLQrsc7l@uptc.mp8jwu6.mongodb.net/Proyecto_I?retryWrites=true&w=majority"
 
 mongoose.set('strictQuery', false)
 

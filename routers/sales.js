@@ -4,7 +4,8 @@ const {
     findSaleById,
     saveSale,
     findSalesByDate,
-    updateSale
+    updateSale,
+    getMonthlyStatistics
 } = require('../Controllers/sales');
 
 saleRoutes.get("/", findAllSales);
@@ -12,5 +13,6 @@ saleRoutes.get("/:id", findSaleById);
 saleRoutes.post("/", saveSale);
 saleRoutes.get("/byDate/:date",findSalesByDate)
 //saleRoutes.put("/:id", updateSale);
+saleRoutes.get("/statistics/:month",getMonthlyStatistics)
 
 module.exports = saleRoutes;
